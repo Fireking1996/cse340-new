@@ -124,4 +124,54 @@ VALUES
  'Bridgeview, IL',
  '2026-10-05');
 
- 
+ CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE project_categories (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES service_projects(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES categories(category_id)
+        ON DELETE CASCADE
+);
+
+INSERT INTO categories (name)
+VALUES
+('Community Development'),
+('Environmental Sustainability'),
+('Volunteer Services');
+
+INSERT INTO project_categories (project_id, category_id)
+VALUES
+
+-- Community Development
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+
+-- Environmental Sustainability
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+
+-- Volunteer Services
+(11, 3),
+(12, 3),
+(13, 3),
+(14, 3),
+(15, 3);
