@@ -66,7 +66,6 @@ app.get('/categories', async (req, res) => {
     res.render('categories', { title, categories });
 });
 
-
 app.listen(PORT, async () => {
   try {
     await testConnection();

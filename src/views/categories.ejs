@@ -2,19 +2,11 @@
 <main>
     <h1><%= title %></h1>
      
-    <p>Here are the available service project categories:</p>
+   <p>Here are the available categories:</p>
 
-    <ul>
-
-        <% categories.forEach(category => { %>
-
-            <li>
-                <%= category.name %>
-            </li>
-
-        <% }); %>
-
-    </ul>
-
-</main>
+   <ul>
+    <% categories.forEach(category => { %>
+        <li><%= category.name %></li>
+    <% }); %>
+</ul>
 <%- include('partials/footer') %>
