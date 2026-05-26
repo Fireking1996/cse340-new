@@ -1,29 +1,36 @@
 import express from 'express';
 
 import { showHomePage } from './controllers/index.js';
-import { showOrganizationsPage } from './controllers/organizations.js';
-import { showProjectsPage } from './controllers/projects.js';
-import { showCategoriesPage } from './controllers/categories.js';
+
+import {
+    showOrganizationsPage,
+    showOrganizationDetailsPage,
+    showNewOrganizationForm,
+    processNewOrganizationForm
+} from './controllers/organizations.js';
+
+import { showProjectsPage, showProjectDetailsPage } from './controllers/projects.js';
+import { showCategoriesPage, showCategoryDetailsPage } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
-import { showOrganizationDetailsPage } from './controllers/organizations.js';
-import {showProjectDetailsPage} from './controllers/projects.js';
-import {showCategoryDetailsPage} from './controllers/categories.js';
 
 const router = express.Router();
 
 router.get('/', showHomePage);
+
 router.get('/organizations', showOrganizationsPage);
-router.get('/projects', showProjectsPage);
-router.get('/categories', showCategoriesPage);
-
-// error-handling routes
-router.get('/test-error', testErrorPage);
-
-// Route for organization details page
 router.get('/organization/:id', showOrganizationDetailsPage);
 
+router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
 
+router.get('/categories', showCategoriesPage);
 router.get('/category/:id', showCategoryDetailsPage);
+
+// error route
+router.get('/test-error', testErrorPage);
+
+// organization form
+router.get('/new-organization', showNewOrganizationForm);
+router.post('/new-organization', processNewOrganizationForm);
 
 export default router;
