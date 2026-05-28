@@ -4,7 +4,7 @@ const getAllOrganizations = async () => {
 
     const query = `
         SELECT organization_id, name, description, contact_email, logo_filename
-        FROM organization;
+        FROM organizations;
     `;
 
     const result = await db.query(query);
@@ -16,7 +16,7 @@ const getOrganizationDetails = async (organizationId) => {
 
     const query = `
         SELECT organization_id, name, description, contact_email, logo_filename
-        FROM organization
+        FROM organizations
         WHERE organization_id = $1;
     `;
 
@@ -25,10 +25,16 @@ const getOrganizationDetails = async (organizationId) => {
     return result.rows.length > 0 ? result.rows[0] : null;
 };
 
-const createOrganization = async (name, description, contactEmail, logoFilename) => {
+const createOrganization = async (
+    name,
+    description,
+    contactEmail,
+    logoFilename
+) => {
 
     const query = `
-        INSERT INTO organization (name, description, contact_email, logo_filename)
+        INSERT INTO organizations
+        (name, description, contact_email, logo_filename)
         VALUES ($1, $2, $3, $4)
         RETURNING organization_id;
     `;
