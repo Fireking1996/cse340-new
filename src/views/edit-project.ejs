@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<h1><%= title %></h1>
+
+<form action="/edit-project/<%= project.project_id %>" method="POST">
+
+    <label>Title</label>
+    <input type="text" name="title" value="<%= project.title %>" required>
+
+    <label>Description</label>
+    <textarea name="description" required><%= project.description %></textarea>
+
+    <label>Location</label>
+    <input type="text" name="location" value="<%= project.location %>" required>
+
+    <label>Date</label>
+    <input type="date" name="date" value="<%= project.date.toISOString().split('T')[0] %>" required>
+
+    <label>Organization</label>
+    <select name="organizationId" required>
+        <% organizations.forEach(org => { %>
+            <option value="<%= org.organization_id %>"
+                <%= org.organization_id === project.organization_id ? 'selected' : '' %>>
+                <%= org.name %>
+            </option>
+        <% }) %>
+    </select>
+
+    <button type="submit">Update Project</button>
+</form>
+
+<%- include('partials/footer') %>
