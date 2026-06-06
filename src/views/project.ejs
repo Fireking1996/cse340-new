@@ -29,7 +29,9 @@
     Edit Categories
 </a>
 
-<a href="/edit-project/<%= project.project_id %>">Edit Project</a>
+<% if (user && user.role_name === 'admin') { %>
+    <a href="/new-project">Add New Service Project</a>
+<% } %>
 
 </main>
 
