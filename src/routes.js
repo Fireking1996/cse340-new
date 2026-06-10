@@ -18,7 +18,9 @@ import { showProjectsPage,
     processNewProjectForm,
     projectValidation,
     showEditProjectForm,
-    processEditProjectForm
+    processEditProjectForm,
+    removeVolunteerFromProject,
+    addVolunteerToProject
  } from './controllers/projects.js';
 
 import { showCategoriesPage, 
@@ -156,6 +158,18 @@ router.get(
     "/users",
     requireRole("admin"),
     showUsersPage
+);
+
+router.get(
+  '/project/:id/volunteer',
+  requireLogin,
+  addVolunteerToProject
+);
+
+router.get(
+  '/project/:id/unvolunteer',
+  requireLogin,
+  removeVolunteerFromProject
 );
 
 export default router;

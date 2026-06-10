@@ -32,7 +32,16 @@
 <% if (user && user.role_name === 'admin') { %>
     <a href="/new-project">Add New Service Project</a>
 <% } %>
+<% if (user) { %>
 
+    <% if (isVolunteering) { %>
+        <p>You are volunteering for this project.</p>
+        <a href="/project/<%= project.project_id %>/unvolunteer">Remove Volunteer</a>
+    <% } else { %>
+        <a href="/project/<%= project.project_id %>/volunteer">Volunteer</a>
+    <% } %>
+
+<% } %>
 </main>
 
 <%- include('partials/footer') %>

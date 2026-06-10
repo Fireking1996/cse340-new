@@ -2,7 +2,11 @@ import {
     getUpcomingProjects,
     getProjectDetails,
     createProject,
-    updateProject
+    updateProject,
+    addVolunteer,
+    removeVolunteer,
+    getUserVolunteeredProjects,
+    isUserVolunteering
 } from '../models/projects.js';
 import {getAllOrganizations} from '../models/organizations.js';
 import { body, validationResult } from 'express-validator';
@@ -29,9 +33,19 @@ const showProjectDetailsPage = async (req, res) => {
 
     const project = await getProjectDetails(id);
 
+    let isVolunteering = false;
+
+    if (req.session.user) {
+        isVolunteering = await isUserVolunteering(
+            id,
+            req.session.user.user_id
+        );
+    }
+
     res.render('project', {
         title: project.title,
-        project
+        project,
+        isVolunteering
     });
 };
 
@@ -133,6 +147,24 @@ const processEditProjectForm = async (req, res) => {
     res.redirect(`/project/${id}`);
 };
 
+const addVolunteerToProject = async (req, res) => {
+    const projectId = req.params.id;
+    const userId = req.session.user.user_id;
+
+    await addVolunteer(projectId, userId);
+
+    res.redirect(`/project/${projectId}`);
+};
+
+const removeVolunteerFromProject = async (req, res) => {
+    const projectId = req.params.id;
+    const userId = req.session.user.user_id;
+
+    await removeVolunteer(projectId, userId);
+
+    res.redirect(`/project/${projectId}`);
+};
+
 export {
     showProjectsPage,
     showProjectDetailsPage,
@@ -140,5 +172,7 @@ export {
     processNewProjectForm,
     projectValidation,
     showEditProjectForm,
-    processEditProjectForm
+    processEditProjectForm,
+    removeVolunteerFromProject,
+    addVolunteerToProject
 };
